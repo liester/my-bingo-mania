@@ -45,7 +45,9 @@ app.get('/jobs', async (req, res) => {
 
 // Madness required for client side react router
 app.get('/*', (req, res) => {
-    let url = path.join(__dirname, '../client/build', 'index.html');
+    console.log("No route found, attempting to return index.html")
+    let url = path.join(__dirname, '../build', 'index.html');
+    console.log('URL:'+url);
     if (!url.startsWith('/app/')) // we're on local windows
         url = url.substring(1);
     res.sendFile(url);
