@@ -42,6 +42,15 @@ app.get('/jobs', async (req, res) => {
     }
 });
 
+
+// Madness required for client side react router
+app.get('/*', (req, res) => {
+    let url = path.join(__dirname, '../client/build', 'index.html');
+    if (!url.startsWith('/app/')) // we're on local windows
+        url = url.substring(1);
+    res.sendFile(url);
+});
+
 app.listen(PORT, () => {
     console.log(`server started on port ${PORT}`);
 });
