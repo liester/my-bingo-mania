@@ -9,7 +9,6 @@ import Search from './Search';
 import Results from './Results';
 import JobDetails from './JobDetails';
 import JobsContext from '../context/jobs';
-import Loader from './Loader';
 
 const HomePage = (props) => {
   const [results, setResults] = useState([]);
@@ -86,7 +85,6 @@ const HomePage = (props) => {
 
   return (
     <JobsContext.Provider value={value}>
-      <Loader show={isLoading}>Loading...</Loader>
       <div className={`${page === 'details' && 'hide'}`}>
         <Header />
         <Search />

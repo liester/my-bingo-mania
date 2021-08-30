@@ -10,11 +10,14 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
+    Link
 } from "react-router-dom";
 
 ReactDOM.render(
   <Provider store={store}>
       <Router>
+          <Link to={'/home'}>Home</Link>
+          <Link to={'/bingo'}>Bingo</Link>
           <Switch>
               <Route path="/home">
                   <HomePage />
