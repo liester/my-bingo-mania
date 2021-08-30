@@ -16,11 +16,11 @@ ReactDOM.render(
   <Provider store={store}>
       <Router>
           <Switch>
-              <Route path="/">
-                  <BingoPage />
-              </Route>
               <Route path="/home">
                   <HomePage />
+              </Route>
+              <Route path="/">
+                  <BingoPage />
               </Route>
           </Switch>
       </Router>
