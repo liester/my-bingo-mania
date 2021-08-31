@@ -1,0 +1,9 @@
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.box {
+  width: 500px;
+  text-align: center;
+}

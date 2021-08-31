@@ -4,6 +4,8 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 
+const { Server } = require("socket.io");
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -53,6 +55,25 @@ app.get('/*', (req, res) => {
     res.sendFile(url);
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log(`server started on port ${PORT}`);
 });
+
+const io = new Server(server, {
+    cors: {
+        origin: '*'
+    }
+});
+app.post("/message", (request, response) => {
+    io.emit('chat message', 'hello hello')
+    response.send('message emitted')
+})
+
+
+
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
+
+
