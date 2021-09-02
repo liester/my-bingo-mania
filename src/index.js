@@ -7,7 +7,7 @@ import {
   Route,
 } from 'react-router-dom';
 import store from './store/store';
-import BingoPage from './components/bingo/BingoPage';
+import BingoGame from './components/bingo/BingoGame';
 import BingoHost from './components/bingo-host/BingoHost';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -22,8 +22,8 @@ ReactDOM.render(
         <Route path="/host">
           <BingoHost />
         </Route>
-        <Route path="/">
-          <BingoPage />
+        <Route path="/game">
+          <BingoGame />
         </Route>
       </Switch>
     </Router>

@@ -5,22 +5,36 @@ import axios from '../../utils/axios';
 
 const BingoHost = () => {
   const [gameCode, setGameCode] = useState();
+  const [calledNumbers, setCalledNumbers] = useState([]);
 
   const newGame = () => {
     axios.post('/create-game')
-      .then((response) => {
-        setGameCode(response.gameCode);
+      .then(({ data }) => {
+        setGameCode(data.gameCode);
+      });
+  };
+
+  const callNextNumber = () => {
+    axios.post('/call-next-number')
+      .then(({ data }) => {
+        setCalledNumbers([...calledNumbers, data.nextNumber]);
       });
   };
   return (
-    <FlexContainer justifyContent="center">
+    <FlexContainer justifyContent="center" alignItems="center" flexDirection="column">
       <Button onClick={newGame} size="lg"> New Game </Button>
       {gameCode && (
-      <div>
-        Game Code:
-        {gameCode}
-      </div>
+      <FlexContainer>
+        <div>
+          Game Code:
+          {gameCode}
+        </div>
+        <Button onClick={callNextNumber}>Call Next Number</Button>
+      </FlexContainer>
       )}
+      {!!calledNumbers.length && calledNumbers.map((number) => (
+        <div>{number}</div>
+      ))}
     </FlexContainer>
   );
 };
