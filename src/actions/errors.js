@@ -1,8 +1,8 @@
 export const setErrors = (error) => ({
   type: 'SET_ERRORS',
-  error
+  error,
 });
 
 export const resetErrors = () => ({
-  type: 'RESET_ERRORS'
+  type: 'RESET_ERRORS',
 });

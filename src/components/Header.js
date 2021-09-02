@@ -1,9 +1,14 @@
 import React from 'react';
+import {
+  Link,
+} from 'react-router-dom';
+import FlexContainer from './common/FlexContainer';
 
 const Header = () => (
-  <header className="header">
-    <div className="title">Github Job Search</div>
-  </header>
+  <FlexContainer justifyContent="center">
+    <Link style={{ padding: '0px 10px' }} to="/bingo">Game</Link>
+    <Link style={{ padding: '0px 10px' }} to="/host">Host</Link>
+  </FlexContainer>
 );
 
 export default Header;

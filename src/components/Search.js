@@ -1,5 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import {
+  Form, Button, Row, Col,
+} from 'react-bootstrap';
 import JobsContext from '../context/jobs';
 
 const Search = () => {
@@ -8,7 +10,7 @@ const Search = () => {
   const [state, setState] = useState({
     description: '',
     location: '',
-    full_time: false
+    full_time: false,
   });
 
   const handleInputChange = (event) => {
@@ -16,12 +18,12 @@ const Search = () => {
     if (name === 'full_time') {
       setState((prevState) => ({
         ...state,
-        [name]: !prevState.full_time
+        [name]: !prevState.full_time,
       }));
     } else {
       setState({
         ...state,
-        [name]: value
+        [name]: value,
       });
     }
   };

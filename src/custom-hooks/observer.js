@@ -17,7 +17,7 @@ const useObserver = (targetRef) => {
       });
     });
 
-    const current = targetRef.current;
+    const { current } = targetRef;
     observer.observe(current);
 
     return () => {
