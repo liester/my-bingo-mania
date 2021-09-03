@@ -24,7 +24,10 @@ const BingoHost = () => {
     <FlexContainer justifyContent="center" alignItems="center" flexDirection="column">
       <Button onClick={newGame} size="lg"> New Game </Button>
       {gameCode && (
-      <FlexContainer>
+      <FlexContainer
+        flexDirection="column"
+        alignItems="center"
+      >
         <div>
           Game Code:
           {gameCode}

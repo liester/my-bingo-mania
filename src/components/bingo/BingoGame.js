@@ -6,23 +6,19 @@ import { BASE_API_URL } from '../../utils/constants';
 import axios from '../../utils/axios';
 // import styles from './BingoGame.module.css';
 import FlexContainer from '../common/FlexContainer';
+import speak from '../../utils/speak';
 
 const socket = io(BASE_API_URL);
 
 const BingoGame = () => {
-  const [messages, setMessages] = useState([]);
   const [gameCode, setGameCode] = useState();
-
-  socket.on('chat message', (message) => {
-    setMessages([...messages, message]);
+  const [calledNumbers, setCalledNumbers] = useState([]);
+  // This needs to be a memo or something.
+  socket.on('next number', (nextNumber) => {
+    console.log(`next number received: ${nextNumber}`);
+    speak(nextNumber);
+    setCalledNumbers([...calledNumbers, nextNumber]);
   });
-
-  // const sendMessage = (message) => {
-  //   axios.post('/message', { message })
-  //     .then((response) => {
-  //       console.log(`RESPONSE:${response}`);
-  //     });
-  // };
 
   const joinGame = () => {
     console.log(`joining game: ${gameCode}`);
@@ -37,9 +33,14 @@ const BingoGame = () => {
   };
 
   return (
-    <FlexContainer justifyContent="center">
-      <input onChange={updateGameCode} />
-      <Button onClick={joinGame} size="lg">Join Game</Button>
+    <FlexContainer justifyContent="center" flexDirection="column" alignItems="center">
+      <FlexContainer>
+        <input onChange={updateGameCode} />
+        <Button onClick={joinGame} size="lg">Join Game</Button>
+      </FlexContainer>
+      {!!calledNumbers.length && calledNumbers.map((number) => (
+        <div>{number}</div>
+      ))}
     </FlexContainer>
   );
 };
