@@ -16,12 +16,10 @@ const BingoGame = () => {
 
   useEffect(() => {
     socket.on('next number', (nextNumber) => {
-      // eslint-disable-next-line no-console
-      console.log(`next number received: ${nextNumber}`);
       speak(nextNumber);
-      setCalledNumbers([...calledNumbers, nextNumber]);
+      setCalledNumbers((previousCalledNumbers) => [...previousCalledNumbers, nextNumber]);
     });
-  }, []);
+  }, [socket, setCalledNumbers, speak]);
 
   const joinGame = () => {
     console.log(`joining game: ${gameCode}`);
