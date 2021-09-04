@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 // import classNames from 'classnames';
 import { Button } from 'react-bootstrap';
@@ -13,12 +13,15 @@ const socket = io(BASE_API_URL);
 const BingoGame = () => {
   const [gameCode, setGameCode] = useState();
   const [calledNumbers, setCalledNumbers] = useState([]);
-  // This needs to be a memo or something.
-  socket.on('next number', (nextNumber) => {
-    console.log(`next number received: ${nextNumber}`);
-    speak(nextNumber);
-    setCalledNumbers([...calledNumbers, nextNumber]);
-  });
+
+  useEffect(() => {
+    socket.on('next number', (nextNumber) => {
+      // eslint-disable-next-line no-console
+      console.log(`next number received: ${nextNumber}`);
+      speak(nextNumber);
+      setCalledNumbers([...calledNumbers, nextNumber]);
+    });
+  }, []);
 
   const joinGame = () => {
     console.log(`joining game: ${gameCode}`);
