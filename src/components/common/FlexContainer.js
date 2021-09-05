@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const FlexContainer = (props) => {
-  const { children, ...rest } = props;
+  const {
+    children, className, style, ...rest
+  } = props;
   const defaultStyles = {
     display: 'flex',
   };
   return (
-    <div style={{ ...defaultStyles, ...rest }}>
+    <div style={{ ...defaultStyles, ...style, ...rest }} className={className}>
       {children}
     </div>
   );
@@ -41,10 +43,12 @@ FlexContainer.propTypes = {
   wrap: PropTypes.bool,
   scroll: PropTypes.bool,
   flex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  style: PropTypes.shape(),
 };
 
 FlexContainer.defaultProps = {
   className: null,
+  style: null,
   alignItems: null,
   justifyContent: null,
   flexDirection: null,
