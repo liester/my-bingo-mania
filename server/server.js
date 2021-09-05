@@ -14,6 +14,13 @@ app.use(express.static(buildPath));
 app.use(cors());
 app.use(express.json());
 
+const server = app.listen(PORT, () => {
+  console.log(`server started on port ${PORT}`);
+});
+
+const io = SocketRoutes(server);
+BingoRoutes(app, io);
+
 // Madness required for client side react router
 app.get('/*', (req, res) => {
   console.log('No route found, attempting to return index.html');
@@ -24,10 +31,3 @@ app.get('/*', (req, res) => {
   }
   res.sendFile(url);
 });
-
-const server = app.listen(PORT, () => {
-  console.log(`server started on port ${PORT}`);
-});
-
-const io = SocketRoutes(server);
-BingoRoutes(app, io);

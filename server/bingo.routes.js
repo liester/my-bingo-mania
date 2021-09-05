@@ -10,11 +10,13 @@ module.exports = (app, io) => {
           * charactersLength));
     }
     currentGames.push(gameCode);
+    console.log(`Current Games: ${currentGames}`);
     res.json({ gameCode });
   });
 
   app.post('/join-game', async (req, res) => {
-    res.json({ success: true });
+    const { gameCodeToJoin } = req.body;
+    res.json({ success: true, joinedGame: gameCodeToJoin });
   });
 
   app.get('/current-games', (req, res) => {

@@ -11,14 +11,15 @@ import speak from '../../utils/speak';
 const socket = io(BASE_API_URL);
 
 const BingoGame = () => {
-  const [gameCode, setGameCode] = useState();
+  // const [gameCode, setGameCode] = useState();
   const [calledNumbers, setCalledNumbers] = useState([]);
+  const [currentGames, setCurrentGames] = useState([]);
 
   const joinGame = useCallback((gameCodeToJoin) => {
     console.log(`joining game: ${gameCodeToJoin}`);
     axios.post('/join-game', { gameCodeToJoin })
       .then(({ data }) => {
-        console.log(`RESPONSE:${data}`);
+        console.log(`RESPONSE:${data.joinedGame}`);
       });
   }, [axios]);
 
@@ -30,23 +31,29 @@ const BingoGame = () => {
   }, [socket, setCalledNumbers, speak]);
 
   useEffect(() => {
-
+    axios.get('/current-games').then(({ data }) => {
+      setCurrentGames(data);
+    });
   }, []);
 
-  const updateGameCode = (e) => {
-    setGameCode(e.target.value);
-  };
+  // const updateGameCode = (e) => {
+  //   setGameCode(e.target.value);
+  // };
 
   return (
     <FlexContainer justifyContent="center">
-      <FlexContainer className={styles.currentGames}>
-        Current Games
+      <FlexContainer className={styles.currentGames} flexDirection="column" justifyContent="center">
+        <div>Current Games</div>
+        {!currentGames.length && <div>No Current Games</div>}
+        {!!currentGames.length
+        && currentGames.map((currentGameCode) => (
+          <FlexContainer alignItems="center" justifyContent="spaceBetween">
+            <div style={{ padding: '10px 10px' }}>{currentGameCode}</div>
+            <Button onClick={() => joinGame(currentGameCode)}>Join</Button>
+          </FlexContainer>
+        ))}
       </FlexContainer>
       <FlexContainer className={styles.joinGame} justifyContent="center" flexDirection="column" alignItems="center">
-        <FlexContainer>
-          <input onChange={updateGameCode} />
-          <Button onClick={() => joinGame(gameCode)} size="lg">Join Game</Button>
-        </FlexContainer>
         {!!calledNumbers.length && calledNumbers.map((number) => (
           <div>{number}</div>
         ))}

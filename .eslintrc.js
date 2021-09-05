@@ -22,5 +22,6 @@ module.exports = {
     'react/destructuring-assignment': 0,
     'no-plusplus': 0,
     'no-console': 0,
+    'max-len': 0,
   },
 };
