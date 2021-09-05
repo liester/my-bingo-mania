@@ -17,10 +17,11 @@ const BingoGame = () => {
 
   const joinGame = useCallback((gameCodeToJoin) => {
     console.log(`joining game: ${gameCodeToJoin}`);
-    axios.post('/join-game', { gameCodeToJoin })
-      .then(({ data }) => {
-        console.log(`RESPONSE:${data.joinedGame}`);
-      });
+    // axios.post('/join-game', { gameCodeToJoin })
+    //   .then(({ data }) => {
+    //     console.log(`RESPONSE:${data.joinedGame}`);
+    //   });
+    socket.emit('join-game', gameCodeToJoin);
   }, [axios]);
 
   useEffect(() => {

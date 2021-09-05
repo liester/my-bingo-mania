@@ -1,5 +1,7 @@
 const { Server } = require('socket.io');
 
+const socketMap = {};
+
 module.exports = (server) => {
   const io = new Server(server, {
     cors: {
@@ -12,8 +14,9 @@ module.exports = (server) => {
 
     socket.on('disconnect', () => console.log(`Disconnected: ${socket.id}`));
 
-    socket.on('join', (room) => {
+    socket.on('join-game', (room) => {
       console.log(`Socket ${socket.id} joining ${room}`);
+      socketMap[socket.id] = room;
       socket.join(room);
     });
 
