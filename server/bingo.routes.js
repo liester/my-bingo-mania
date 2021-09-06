@@ -14,22 +14,21 @@ module.exports = (app, io) => {
     res.json({ gameCode });
   });
 
-  app.post('/join-game', async (req, res) => {
-    const { gameCodeToJoin } = req.body;
-    res.json({ success: true, joinedGame: gameCodeToJoin });
-  });
-
   app.get('/current-games', (req, res) => {
     res.json(currentGames);
   });
 
   app.post('/call-next-number', async (req, res) => {
+    const { gameCode } = req.body;
+    if (!gameCode) {
+      return;
+    }
     const characters = 'BINGO';
     const characterIndex = Math.floor(Math.random()
         * characters.length);
     const letter = characters.charAt(characterIndex);
     const number = (Math.floor(Math.random() * 15) + 1) * (characterIndex + 1);
-    io.emit('next number', `${letter} ${number}`);
+    io.to(gameCode).emit('next number', `${letter} ${number}`);
     res.json({ nextNumber: `${letter} ${number}` });
   });
 };

@@ -14,10 +14,10 @@ module.exports = (server) => {
 
     socket.on('disconnect', () => console.log(`Disconnected: ${socket.id}`));
 
-    socket.on('join-game', (room) => {
-      console.log(`Socket ${socket.id} joining ${room}`);
-      socketMap[socket.id] = room;
-      socket.join(room);
+    socket.on('join-game', (gameCode) => {
+      console.log(`Socket ${socket.id} joining ${gameCode}`);
+      socketMap[socket.id] = gameCode;
+      socket.join(gameCode);
     });
 
     socket.on('chat', (data) => {

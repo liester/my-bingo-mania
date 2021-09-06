@@ -1,21 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import FlexContainer from '../common/FlexContainer';
 import axios from '../../utils/axios';
 
 const BingoHost = () => {
-  const [gameCode, setGameCode] = useState();
   const [calledNumbers, setCalledNumbers] = useState([]);
+  const [currentGames, setCurrentGames] = useState([]);
+
+  useEffect(() => {
+    axios.get('/current-games').then(({ data }) => {
+      setCurrentGames(data);
+    });
+  }, []);
 
   const newGame = () => {
     axios.post('/create-game')
       .then(({ data }) => {
-        setGameCode(data.gameCode);
+        setCurrentGames([...currentGames, data.gameCode]);
       });
   };
 
-  const callNextNumber = () => {
-    axios.post('/call-next-number')
+  const callNextNumber = (gameCode) => {
+    axios.post('/call-next-number', { gameCode })
       .then(({ data }) => {
         setCalledNumbers([...calledNumbers, data.nextNumber]);
       });
@@ -23,18 +29,18 @@ const BingoHost = () => {
   return (
     <FlexContainer justifyContent="center" alignItems="center" flexDirection="column">
       <Button onClick={newGame} size="lg"> New Game </Button>
-      {gameCode && (
-      <FlexContainer
-        flexDirection="column"
-        alignItems="center"
-      >
-        <div>
-          Game Code:
-          {gameCode}
-        </div>
-        <Button onClick={callNextNumber}>Call Next Number</Button>
-      </FlexContainer>
-      )}
+      {currentGames && currentGames.map((currentGame) => (
+        <FlexContainer
+          flexDirection="column"
+          alignItems="center"
+        >
+          <div>
+            Game Code:
+            {currentGame}
+          </div>
+          <Button onClick={() => callNextNumber(currentGame)}>Call Next Number</Button>
+        </FlexContainer>
+      ))}
       {!!calledNumbers.length && calledNumbers.map((number) => (
         <div>{number}</div>
       ))}

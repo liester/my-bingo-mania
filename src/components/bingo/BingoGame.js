@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-// import classNames from 'classnames';
 import { Button } from 'react-bootstrap';
 import { BASE_API_URL } from '../../utils/constants';
 import axios from '../../utils/axios';
@@ -11,17 +10,12 @@ import speak from '../../utils/speak';
 const socket = io(BASE_API_URL);
 
 const BingoGame = () => {
-  // const [gameCode, setGameCode] = useState();
   const [calledNumbers, setCalledNumbers] = useState([]);
   const [currentGames, setCurrentGames] = useState([]);
 
-  const joinGame = useCallback((gameCodeToJoin) => {
-    console.log(`joining game: ${gameCodeToJoin}`);
-    // axios.post('/join-game', { gameCodeToJoin })
-    //   .then(({ data }) => {
-    //     console.log(`RESPONSE:${data.joinedGame}`);
-    //   });
-    socket.emit('join-game', gameCodeToJoin);
+  const joinGame = useCallback((gameCode) => {
+    console.log(`joining game: ${gameCode}`);
+    socket.emit('join-game', gameCode);
   }, [axios]);
 
   useEffect(() => {
@@ -36,10 +30,6 @@ const BingoGame = () => {
       setCurrentGames(data);
     });
   }, []);
-
-  // const updateGameCode = (e) => {
-  //   setGameCode(e.target.value);
-  // };
 
   return (
     <FlexContainer justifyContent="center">
