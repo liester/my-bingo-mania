@@ -3,7 +3,7 @@
 name: "Template Name"
 about: "This template is for testing!"
 title: "[TEST] "
-labels: "[bug]"
+labels:
 
 - bug
 - "help needed"
