@@ -1,12 +1,11 @@
 ---
-
-name: "Template Name"
-about: "This template is for testing!"
-title: "[TEST] "
-labels:
-
-- bug
-- "help needed"
+name: Custom issue template
+about: Describe this issue template's purpose here.
+title: 'Test Title'
+labels: bug
+assignees: ''
 
 ---
+
+
 ## Testing
