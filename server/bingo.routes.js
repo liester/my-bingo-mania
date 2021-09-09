@@ -25,11 +25,6 @@ module.exports = (app, io) => {
     if (!gameCode) {
       return;
     }
-    // const characters = 'BINGO';
-    // const characterIndex = Math.floor(Math.random()
-    //     * characters.length);
-    // const letter = characters.charAt(characterIndex);
-    // const number = (Math.floor(Math.random() * 15) + 1) * (characterIndex + 1);
     const numberToCall = currentGames[gameCode] && currentGames[gameCode].pop();
     if (!numberToCall) {
       res.status(500).json({ error: `No numbers left for game: ${gameCode} .  Someone should have won by now` });
