@@ -1,0 +1,8 @@
+.bingoBall {
+  background-color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  color: black;
+  font-size: 1.2em;
+}

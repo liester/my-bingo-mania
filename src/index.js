@@ -7,7 +7,7 @@ import {
   Route,
 } from 'react-router-dom';
 import store from './store/store';
-import BingoGame from './components/bingo/BingoGame';
+import BingoGame from './components/bingo-game/BingoGame';
 import BingoHost from './components/bingo-host/BingoHost';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

@@ -6,15 +6,15 @@ import axios from '../../utils/axios';
 import styles from './BingoGame.module.css';
 import FlexContainer from '../common/FlexContainer';
 import speak from '../../utils/speak';
+import BingoBall from '../bingo-ball/BingoBall';
 
 const socket = io(BASE_API_URL);
 
 const BingoGame = () => {
-  const [calledNumbers, setCalledNumbers] = useState([]);
+  const [calledNumbers, setCalledNumbers] = useState(['N 44']);
   const [currentGames, setCurrentGames] = useState([]);
 
   const joinGame = useCallback((gameCode) => {
-    console.log(`joining game: ${gameCode}`);
     socket.emit('join-game', gameCode);
   }, [axios]);
 
@@ -33,7 +33,7 @@ const BingoGame = () => {
 
   return (
     <FlexContainer justifyContent="center">
-      <FlexContainer className={styles.currentGames} flexDirection="column" justifyContent="center">
+      <FlexContainer className={styles.currentGames} flexDirection="column">
         <div>Current Games</div>
         {!currentGames.length && <div>No Current Games</div>}
         {!!currentGames.length
@@ -46,7 +46,7 @@ const BingoGame = () => {
       </FlexContainer>
       <FlexContainer className={styles.joinGame} justifyContent="center" flexDirection="column" alignItems="center">
         {!!calledNumbers.length && calledNumbers.map((number) => (
-          <div>{number}</div>
+          <BingoBall>{number}</BingoBall>
         ))}
       </FlexContainer>
     </FlexContainer>
