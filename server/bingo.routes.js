@@ -1,4 +1,6 @@
-const currentGames = [];
+const { generateOptionsForGame } = require('./bingo-generator');
+
+const currentGames = {};
 
 module.exports = (app, io) => {
   app.post('/create-game', async (req, res) => {
@@ -9,13 +11,13 @@ module.exports = (app, io) => {
       gameCode += characters.charAt(Math.floor(Math.random()
           * charactersLength));
     }
-    currentGames.push(gameCode);
-    console.log(`Current Games: ${currentGames}`);
+    currentGames[gameCode] = generateOptionsForGame();
+    console.log(`Current Games: ${Object.keys(currentGames)}`);
     res.json({ gameCode });
   });
 
   app.get('/current-games', (req, res) => {
-    res.json(currentGames);
+    res.json(Object.keys(currentGames));
   });
 
   app.post('/call-next-number', async (req, res) => {
@@ -23,12 +25,13 @@ module.exports = (app, io) => {
     if (!gameCode) {
       return;
     }
-    const characters = 'BINGO';
-    const characterIndex = Math.floor(Math.random()
-        * characters.length);
-    const letter = characters.charAt(characterIndex);
-    const number = (Math.floor(Math.random() * 15) + 1) * (characterIndex + 1);
-    io.to(gameCode).emit('next number', `${letter} ${number}`);
-    res.json({ nextNumber: `${letter} ${number}` });
+    // const characters = 'BINGO';
+    // const characterIndex = Math.floor(Math.random()
+    //     * characters.length);
+    // const letter = characters.charAt(characterIndex);
+    // const number = (Math.floor(Math.random() * 15) + 1) * (characterIndex + 1);
+    const numberToCall = currentGames[gameCode] && currentGames[gameCode].pop();
+    io.to(gameCode).emit('next number', numberToCall);
+    res.json({ nextNumber: numberToCall });
   });
 };

@@ -15,15 +15,14 @@ module.exports = (server) => {
     socket.on('disconnect', () => console.log(`Disconnected: ${socket.id}`));
 
     socket.on('join-game', (gameCode) => {
-      console.log(`Socket ${socket.id} joining ${gameCode}`);
+      if (socketMap[socket.id]) {
+        console.log(`Socket ${socket.id} leaving bingo game: ${socketMap[socket.id]}`);
+        socket.leave(socketMap[socket.id]);
+      }
+
+      console.log(`Socket ${socket.id} joining bingo game: ${gameCode}`);
       socketMap[socket.id] = gameCode;
       socket.join(gameCode);
-    });
-
-    socket.on('chat', (data) => {
-      const { message, room } = data;
-      console.log(`msg: ${message}, room: ${room}`);
-      io.to(room).emit('chat', message);
     });
   });
   return io;
