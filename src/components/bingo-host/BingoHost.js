@@ -49,7 +49,7 @@ const BingoHost = () => {
         </FlexContainer>
       ))}
       {!!(calledNumbers[hostingGame] || []).length && calledNumbers[hostingGame].map((number) => (
-        <div>{number}</div>
+        <div key={number}>{number}</div>
       ))}
       {hostingGame && (
       <FlexContainer flexDirection="column">
