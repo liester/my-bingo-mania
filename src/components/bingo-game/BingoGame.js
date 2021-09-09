@@ -11,7 +11,7 @@ import BingoBall from '../bingo-ball/BingoBall';
 const socket = io(BASE_API_URL);
 
 const BingoGame = () => {
-  const [calledNumbers, setCalledNumbers] = useState(['N 44']);
+  const [calledNumbers, setCalledNumbers] = useState([]);
   const [currentGames, setCurrentGames] = useState([]);
 
   const joinGame = useCallback((gameCode) => {
