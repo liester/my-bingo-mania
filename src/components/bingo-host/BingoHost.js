@@ -41,10 +41,10 @@ const BingoHost = () => {
           key={currentGame}
           flexDirection="column"
         >
-          <div>
-            Game Code:
-            {currentGame}
-          </div>
+          <FlexContainer justifyContent="space-between">
+            <div>Game Code:</div>
+            <div>{currentGame}</div>
+          </FlexContainer>
           <Button onClick={() => hostGame(currentGame)}>Host</Button>
         </FlexContainer>
       ))}

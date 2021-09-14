@@ -29,7 +29,7 @@ module.exports = (app, io) => {
     if (!numberToCall) {
       res.status(500).json({ error: `No numbers left for game: ${gameCode} .  Someone should have won by now` });
     } else {
-      io.to(gameCode).emit('next number', numberToCall);
+      io.to(gameCode).emit('next-number', numberToCall);
       res.json({ nextNumber: numberToCall });
     }
   });

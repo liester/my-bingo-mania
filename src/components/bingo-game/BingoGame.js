@@ -19,7 +19,7 @@ const BingoGame = () => {
   }, [axios]);
 
   useEffect(() => {
-    socket.on('next number', (nextNumber) => {
+    socket.on('next-number', (nextNumber) => {
       speak(nextNumber);
       setCalledNumbers((previousCalledNumbers) => [...previousCalledNumbers, nextNumber]);
     });
@@ -32,10 +32,10 @@ const BingoGame = () => {
   }, []);
 
   return (
-    <FlexContainer alignSelf="flexStart" justifyContent="center">
-      <FlexContainer className={styles.currentGames} flexDirection="column">
-        <div>Current Games</div>
+    <FlexContainer alignSelf="flex-start" justifyContent="center">
+      <FlexContainer className={styles.currentGames} flexDirection="column" alignItems="center">
         {!currentGames.length && <div>No Current Games</div>}
+        {!!currentGames.length && <div>Current Games</div>}
         {!!currentGames.length
         && currentGames.map((currentGameCode) => (
           <FlexContainer key={currentGameCode} alignItems="center" justifyContent="space-between">
