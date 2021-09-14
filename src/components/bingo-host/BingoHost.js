@@ -34,12 +34,12 @@ const BingoHost = () => {
   };
 
   return (
-    <FlexContainer justifyContent="center" alignItems="center" flexDirection="column">
+    <FlexContainer id="99" justifyContent="center" flexDirection="column" alignSelf="flex-start">
       <Button onClick={newGame} size="lg"> New Game </Button>
       {currentGames && currentGames.map((currentGame) => (
         <FlexContainer
+          key={currentGame}
           flexDirection="column"
-          alignItems="center"
         >
           <div>
             Game Code:

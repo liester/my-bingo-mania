@@ -1,14 +1,20 @@
 $body-color: #949ca5;
 $default-padding: 2rem;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+@font-face {
+  font-family: "Pineapple";
+  src: local("Pineapple"),
+  url("../fonts/PineappleDemo.ttf")
+  format("TrueType");
 }
 
 html {
   font-size: 62.5%;
+}
+
+#root {
+  height:100vh;
 }
 
 body {

@@ -3,26 +3,32 @@ import PropTypes from 'prop-types';
 
 const FlexContainer = (props) => {
   const {
-    children, className, style, ...rest
+    children, className, style, id, ...rest
   } = props;
   const defaultStyles = {
     display: 'flex',
   };
   return (
-    <div style={{ ...defaultStyles, ...style, ...rest }} className={className}>
+    <div
+      id={id}
+      style={{
+        alignSelf: 'flex-start', ...defaultStyles, ...style, ...rest,
+      }}
+      className={className}
+    >
       {children}
     </div>
   );
 };
 
 FlexContainer.propTypes = {
-  children: PropTypes.shape({}).isRequired,
+  children: PropTypes.node.isRequired,
   className: PropTypes.string,
   alignItems: PropTypes.oneOf([
     'stretch',
     'center',
-    'flexStart',
-    'flexEnd',
+    'flex-start',
+    'flex-end',
     'baseline',
     'initial',
     'inherit',
@@ -31,19 +37,23 @@ FlexContainer.propTypes = {
     'flexStart',
     'flexEnd',
     'center',
-    'spaceBetween',
-    'spaceAround',
+    'space-between',
+    'space-around',
     'initial',
     'inherit',
+  ]),
+  alignSelf: PropTypes.oneOf([
+    'flex-start',
+    'flex-end',
   ]),
   flexDirection: PropTypes.oneOf(['row', 'column']),
   keepHeight: PropTypes.bool,
   noShrink: PropTypes.bool,
-  growToContainer: PropTypes.bool,
   wrap: PropTypes.bool,
   scroll: PropTypes.bool,
   flex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   style: PropTypes.shape(),
+  id: PropTypes.string,
 };
 
 FlexContainer.defaultProps = {
@@ -54,10 +64,11 @@ FlexContainer.defaultProps = {
   flexDirection: null,
   keepHeight: false,
   noShrink: false,
-  growToContainer: false,
   wrap: false,
   scroll: false,
   flex: null,
+  alignSelf: null,
+  id: null,
 };
 
 export default FlexContainer;

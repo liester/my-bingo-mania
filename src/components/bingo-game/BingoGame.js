@@ -32,23 +32,25 @@ const BingoGame = () => {
   }, []);
 
   return (
-    <FlexContainer justifyContent="center">
+    <FlexContainer alignSelf="flexStart" justifyContent="center">
       <FlexContainer className={styles.currentGames} flexDirection="column">
         <div>Current Games</div>
         {!currentGames.length && <div>No Current Games</div>}
         {!!currentGames.length
         && currentGames.map((currentGameCode) => (
-          <FlexContainer alignItems="center" justifyContent="spaceBetween">
+          <FlexContainer key={currentGameCode} alignItems="center" justifyContent="space-between">
             <div style={{ padding: '10px 10px' }}>{currentGameCode}</div>
             <Button onClick={() => joinGame(currentGameCode)}>Join</Button>
           </FlexContainer>
         ))}
       </FlexContainer>
+      {!!calledNumbers.length && (
       <FlexContainer className={styles.joinGame} justifyContent="center" flexDirection="column" alignItems="center">
-        {!!calledNumbers.length && calledNumbers.map((number) => (
+        {calledNumbers.map((number) => (
           <BingoBall>{number}</BingoBall>
         ))}
       </FlexContainer>
+      )}
     </FlexContainer>
   );
 };
