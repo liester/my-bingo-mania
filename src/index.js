@@ -12,7 +12,6 @@ import BingoHost from './components/bingo-host/BingoHost';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import './css/styles.scss';
-// import Header from './components/Header';
 import LandingPage from './components/landing-page/Home';
 import FlexContainer from './components/common/FlexContainer';
 
@@ -20,7 +19,6 @@ ReactDOM.render(
   <FlexContainer justifyContent="center" alignItems="center" style={{ height: '100%' }}>
     <Provider store={store}>
       <Router>
-        {/* <Header /> */}
         <Switch>
           <Route path="/host">
             <BingoHost />
