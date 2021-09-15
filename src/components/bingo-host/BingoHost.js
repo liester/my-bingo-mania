@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import FlexContainer from '../common/FlexContainer';
+import FlexContainer from '../common/flex-container/FlexContainer';
 import axios from '../../utils/axios';
+import CurrentGames from '../current-games/CurrentGames';
+import Button from '../common/button/Button';
 
 const BingoHost = () => {
   const [calledNumbers, setCalledNumbers] = useState({});
@@ -34,29 +35,20 @@ const BingoHost = () => {
   };
 
   return (
-    <FlexContainer id="99" justifyContent="center" flexDirection="column" alignSelf="flex-start">
-      <Button onClick={newGame} size="lg"> New Game </Button>
-      {currentGames && currentGames.map((currentGame) => (
-        <FlexContainer
-          key={currentGame}
-          flexDirection="column"
-        >
-          <FlexContainer justifyContent="space-between">
-            <div>Game Code:</div>
-            <div>{currentGame}</div>
-          </FlexContainer>
-          <Button onClick={() => hostGame(currentGame)}>Host</Button>
+    <FlexContainer flexDirection="row" flex={1}>
+      <CurrentGames gameType="host" currentGameCodes={currentGames} onAction={hostGame} />
+      <FlexContainer flexDirection="column" flex={1} alignItems="center" gutters>
+        <Button onClick={newGame} size="lg"> New Game </Button>
+        {hostingGame && (
+        <FlexContainer flexDirection="column">
+          <div>{`Hosting Game: ${hostingGame}`}</div>
+          <Button onClick={() => callNextNumber(hostingGame)}>Call Next Number</Button>
         </FlexContainer>
-      ))}
-      {!!(calledNumbers[hostingGame] || []).length && calledNumbers[hostingGame].map((number) => (
-        <div key={number}>{number}</div>
-      ))}
-      {hostingGame && (
-      <FlexContainer flexDirection="column">
-        <div>{`Hosting Game: ${hostingGame}`}</div>
-        <Button onClick={() => callNextNumber(hostingGame)}>Call Next Number</Button>
+        )}
+        {!!(calledNumbers[hostingGame] || []).length && calledNumbers[hostingGame].map((number) => (
+          <div key={number}>{number}</div>
+        ))}
       </FlexContainer>
-      )}
     </FlexContainer>
   );
 };

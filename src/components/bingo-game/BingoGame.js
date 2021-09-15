@@ -1,22 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
-import { Button } from 'react-bootstrap';
 import { BASE_API_URL } from '../../utils/constants';
 import axios from '../../utils/axios';
-import styles from './BingoGame.module.css';
-import FlexContainer from '../common/FlexContainer';
+import FlexContainer from '../common/flex-container/FlexContainer';
 import speak from '../../utils/speak';
 import BingoBall from '../bingo-ball/BingoBall';
+import CurrentGames from '../current-games/CurrentGames';
 
 const socket = io(BASE_API_URL);
 
 const BingoGame = () => {
   const [calledNumbers, setCalledNumbers] = useState([]);
   const [currentGames, setCurrentGames] = useState([]);
+  const [currentGame, setCurrentGame] = useState();
 
   const joinGame = useCallback((gameCode) => {
     socket.emit('join-game', gameCode);
-  }, [axios]);
+    setCurrentGame(gameCode);
+  }, []);
 
   useEffect(() => {
     socket.on('next-number', (nextNumber) => {
@@ -32,25 +33,20 @@ const BingoGame = () => {
   }, []);
 
   return (
-    <FlexContainer alignSelf="flex-start" justifyContent="center">
-      <FlexContainer className={styles.currentGames} flexDirection="column" alignItems="center">
-        {!currentGames.length && <div>No Current Games</div>}
-        {!!currentGames.length && <div>Current Games</div>}
-        {!!currentGames.length
-        && currentGames.map((currentGameCode) => (
-          <FlexContainer key={currentGameCode} alignItems="center" justifyContent="space-between">
-            <div style={{ padding: '10px 10px' }}>{currentGameCode}</div>
-            <Button onClick={() => joinGame(currentGameCode)}>Join</Button>
-          </FlexContainer>
-        ))}
+    <FlexContainer flexDirection="row" flex={1}>
+      <CurrentGames gameType="player" currentGameCodes={currentGames} onAction={joinGame} />
+      <FlexContainer flexDirection="column" flex={1} alignItems="center" gutters>
+        {currentGame && (
+        <div>{`Current Game: ${currentGame}`}</div>
+        )}
+        {!!calledNumbers.length && (
+        <FlexContainer justifyContent="center" flexDirection="column" alignItems="center">
+          {calledNumbers.map((number) => (
+            <BingoBall>{number}</BingoBall>
+          ))}
+        </FlexContainer>
+        )}
       </FlexContainer>
-      {!!calledNumbers.length && (
-      <FlexContainer className={styles.joinGame} justifyContent="center" flexDirection="column" alignItems="center">
-        {calledNumbers.map((number) => (
-          <BingoBall>{number}</BingoBall>
-        ))}
-      </FlexContainer>
-      )}
     </FlexContainer>
   );
 };

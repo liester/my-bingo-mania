@@ -1,20 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import styles from './FlexContainer.module.css';
 
 const FlexContainer = (props) => {
   const {
-    children, className, style, id, ...rest
+    children, className, style, id, gutters, ...rest
   } = props;
   const defaultStyles = {
     display: 'flex',
+    alignItems: 'stretch',
   };
   return (
     <div
       id={id}
       style={{
-        alignSelf: 'flex-start', ...defaultStyles, ...style, ...rest,
+        ...defaultStyles, ...style, ...rest,
       }}
-      className={className}
+      className={classNames(className, {
+        [styles.gutters]: gutters,
+      })}
     >
       {children}
     </div>
@@ -34,8 +39,8 @@ FlexContainer.propTypes = {
     'inherit',
   ]),
   justifyContent: PropTypes.oneOf([
-    'flexStart',
-    'flexEnd',
+    'flex-start',
+    'flex-end',
     'center',
     'space-between',
     'space-around',
@@ -47,13 +52,10 @@ FlexContainer.propTypes = {
     'flex-end',
   ]),
   flexDirection: PropTypes.oneOf(['row', 'column']),
-  keepHeight: PropTypes.bool,
-  noShrink: PropTypes.bool,
-  wrap: PropTypes.bool,
-  scroll: PropTypes.bool,
   flex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   style: PropTypes.shape(),
-  id: PropTypes.string,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  gutters: PropTypes.bool,
 };
 
 FlexContainer.defaultProps = {
@@ -62,13 +64,10 @@ FlexContainer.defaultProps = {
   alignItems: null,
   justifyContent: null,
   flexDirection: null,
-  keepHeight: false,
-  noShrink: false,
-  wrap: false,
-  scroll: false,
   flex: null,
   alignSelf: null,
   id: null,
+  gutters: false,
 };
 
 export default FlexContainer;

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FlexContainer from '../common/FlexContainer';
+import FlexContainer from '../common/flex-container/FlexContainer';
 import styles from './BingoBall.module.css';
 
 const BingoBall = ({ children }) => (
