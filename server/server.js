@@ -1,6 +1,9 @@
+require('dotenv').config();
 const path = require('path');
 const cors = require('cors');
 const express = require('express');
+// eslint-disable-next-line no-unused-vars
+const database = require('./database');
 
 const app = express();
 
