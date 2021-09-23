@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const BingoGame = require('./bingo-game');
 
-const database = process.env.MONGO_DB;
-const uri = `mongodb://localhost:27018/${database}`;
+const uri = process.env.MONGO_DB_CONNECTION_URL;
 
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
 
