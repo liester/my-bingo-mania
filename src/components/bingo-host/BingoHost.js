@@ -1,39 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+import React, { useState } from 'react';
 import FlexContainer from '../common/flex-container/FlexContainer';
 import axios from '../../utils/axios';
 import CurrentGames from '../current-games/CurrentGames';
 import Button from '../common/button/Button';
-import { BASE_API_URL } from '../../utils/constants';
-
-const socket = io(BASE_API_URL);
 
 const BingoHost = () => {
   const [calledNumbers, setCalledNumbers] = useState([]);
-  const [currentGames, setCurrentGames] = useState([]);
   const [hostingGame, setHostingGame] = useState();
-
-  useEffect(() => {
-    axios.get('/current-games').then(({ data }) => {
-      setCurrentGames(data);
-    });
-    socket.emit('join-host-channel');
-  }, []);
-
-  useEffect(() => {
-    socket.on('updated-player-count', () => {
-      axios.get('/current-games').then(({ data }) => {
-        setCurrentGames(data);
-      });
-    });
-  }, []);
-
-  const newGame = () => {
-    axios.post('/create-game')
-      .then(({ data }) => {
-        setCurrentGames([...currentGames, data]);
-      });
-  };
 
   const callNextNumber = (gameCode) => {
     axios.post('/call-next-number', { gameCode })
@@ -53,9 +26,8 @@ const BingoHost = () => {
 
   return (
     <FlexContainer flexDirection="row" flex={1}>
-      <CurrentGames gameType="host" currentGames={currentGames} onAction={hostGame} />
+      <CurrentGames gameType="host" onAction={hostGame} />
       <FlexContainer flexDirection="column" flex={1} alignItems="center" gutters>
-        <Button onClick={newGame} size="lg"> New Game </Button>
         {hostingGame && (
         <FlexContainer flexDirection="column">
           <div>{`Hosting Game: ${hostingGame}`}</div>

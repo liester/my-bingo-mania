@@ -6,8 +6,9 @@ import styles from './Header.module.css';
 
 const Header = () => {
   const history = useHistory();
+  const isHost = window.location.href.indexOf('/host') > -1;
   return (
-    <FlexContainer justifyContent="flex-start" className={styles.header}>
+    <FlexContainer justifyContent="space-between" className={styles.header}>
       <ArrowLeft
         className={styles.backButton}
         size={50}
@@ -16,6 +17,7 @@ const Header = () => {
           history.goBack();
         }}
       />
+      <div className={styles.userType}>{isHost ? 'Host' : 'Player'}</div>
     </FlexContainer>
   );
 };

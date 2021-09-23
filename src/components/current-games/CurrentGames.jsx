@@ -1,14 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
+import { io } from 'socket.io-client';
 import FlexContainer from '../common/flex-container/FlexContainer';
 import styles from './CurrentGames.module.css';
+import axios from '../../utils/axios';
+import { BASE_API_URL } from '../../utils/constants';
 
-export default function CurrentGames({ gameType, currentGames, onAction }) {
+const socket = io(BASE_API_URL);
+export default function CurrentGames({ gameType, onAction }) {
   const isHost = gameType === 'host';
+  const [currentGames, setCurrentGames] = useState([]);
+  useEffect(() => {
+    axios.get('/current-games').then(({ data }) => {
+      setCurrentGames(data);
+    });
+    socket.emit('join-host-channel');
+  }, []);
+
+  useEffect(() => {
+    socket.on('updated-player-count', () => {
+      axios.get('/current-games').then(({ data }) => {
+        setCurrentGames(data);
+      });
+    });
+  }, []);
+
+  const newGame = () => {
+    axios.post('/create-game')
+      .then(({ data }) => {
+        setCurrentGames([...currentGames, data]);
+      });
+  };
+
   return (
     <FlexContainer alignItems="stretch" flexDirection="column" className={styles.currentGames}>
       <div className={styles.title}>Current Games</div>
+      {isHost && (
+      <FlexContainer className={styles.newGame} alignSelf="center">
+        <Button onClick={newGame} size="lg"> New Game </Button>
+      </FlexContainer>
+      )}
       {currentGames && currentGames.map((currentGame) => (
         <FlexContainer
           key={currentGame.gameCode}
@@ -27,10 +59,6 @@ export default function CurrentGames({ gameType, currentGames, onAction }) {
 
 CurrentGames.propTypes = {
   gameType: PropTypes.oneOf(['host', 'player']).isRequired,
-  currentGames: PropTypes.arrayOf(PropTypes.shape({
-    gameCode: PropTypes.string,
-    currentPlayerCount: PropTypes.number,
-  })).isRequired,
   onAction: PropTypes.func,
 };
 
