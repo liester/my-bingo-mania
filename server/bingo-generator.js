@@ -96,9 +96,9 @@ function shuffle(array) {
   return shuffledArray;
 }
 
-const generateOptionsForGame = () => shuffle(allOptions);
+const generateNumbersForGame = () => shuffle(allOptions);
 
 module.exports = {
   allOptions,
-  generateOptionsForGame,
+  generateNumbersForGame,
 };

@@ -12,9 +12,6 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-const newBingoGame = new BingoGame({
-  code: 'test',
-  numbers: ['N17'],
-});
-
-newBingoGame.save();
+module.exports = {
+  BingoGame,
+};

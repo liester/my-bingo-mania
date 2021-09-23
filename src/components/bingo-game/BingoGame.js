@@ -24,6 +24,11 @@ const BingoGame = () => {
       speak(nextNumber);
       setCalledNumbers((previousCalledNumbers) => [...previousCalledNumbers, nextNumber]);
     });
+    socket.on('updated-player-count', () => {
+      axios.get('/current-games').then(({ data }) => {
+        setCurrentGames(data);
+      });
+    });
   }, [socket, setCalledNumbers, speak]);
 
   useEffect(() => {
@@ -34,7 +39,7 @@ const BingoGame = () => {
 
   return (
     <FlexContainer flexDirection="row" flex={1}>
-      <CurrentGames gameType="player" currentGameCodes={currentGames} onAction={joinGame} />
+      <CurrentGames gameType="player" currentGames={currentGames} onAction={joinGame} />
       <FlexContainer flexDirection="column" flex={1} alignItems="center" gutters>
         {currentGame && (
         <div>{`Current Game: ${currentGame}`}</div>
@@ -42,7 +47,9 @@ const BingoGame = () => {
         {!!calledNumbers.length && (
         <FlexContainer justifyContent="center" flexDirection="column" alignItems="center">
           {calledNumbers.map((number) => (
-            <BingoBall>{number}</BingoBall>
+            <BingoBall key={number}>
+              {number}
+            </BingoBall>
           ))}
         </FlexContainer>
         )}

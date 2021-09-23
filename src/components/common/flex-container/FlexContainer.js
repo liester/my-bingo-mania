@@ -50,6 +50,7 @@ FlexContainer.propTypes = {
   alignSelf: PropTypes.oneOf([
     'flex-start',
     'flex-end',
+    'center',
   ]),
   flexDirection: PropTypes.oneOf(['row', 'column']),
   flex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
