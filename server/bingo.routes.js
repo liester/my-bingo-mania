@@ -52,4 +52,10 @@ module.exports = (app, io) => {
       res.json({ nextNumber: numberToCall });
     }
   });
+
+  app.delete('/delete-game/:gameCode', async (req, res) => {
+    const { gameCode } = req.params;
+    await BingoGame.findOneAndDelete({ gameCode });
+    res.send();
+  });
 };
