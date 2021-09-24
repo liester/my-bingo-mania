@@ -11,7 +11,7 @@ const BingoHost = () => {
   const callNextNumber = (gameCode) => {
     axios.post('/call-next-number', { gameCode })
       .then(({ data }) => {
-        setCalledNumbers([...calledNumbers, data.nextNumber]);
+        setCalledNumbers([data.nextNumber, ...calledNumbers]);
       });
   };
 

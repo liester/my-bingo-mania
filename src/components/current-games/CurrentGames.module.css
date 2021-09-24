@@ -3,6 +3,11 @@
     border-right: solid #007bff 5px;
 }
 
+.currentGames.collapsed{
+    width: 80px;
+    border-right: solid #007bff 5px;
+}
+
 .title {
     text-align: center;
     font-size: 40px;
