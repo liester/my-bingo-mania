@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
 import { BASE_API_URL } from '../../utils/constants';
 import axios from '../../utils/axios';
 import FlexContainer from '../common/flex-container/FlexContainer';
@@ -14,10 +15,26 @@ const BingoGame = () => {
   const [currentGames, setCurrentGames] = useState([]);
   const [currentGame, setCurrentGame] = useState();
 
+  const params = useParams();
+
   const joinGame = useCallback((gameCode) => {
     socket.emit('join-game', gameCode);
     setCurrentGame(gameCode);
   }, []);
+
+  useEffect(() => {
+    if (params?.gameCode) {
+      console.log(`Joining game: ${params.gameCode}`);
+      joinGame(params.gameCode);
+    }
+    return () => {
+      // This doesn't work correctly.  It needs to send a message to server to exit whatever game they are currently in
+      if (currentGame) {
+        console.log(`Leaving game: ${params.gameCode}`);
+        socket.emit('leave-game', params.gameCode);
+      }
+    };
+  }, [params]);
 
   useEffect(() => {
     socket.on('next-number', (nextNumber) => {

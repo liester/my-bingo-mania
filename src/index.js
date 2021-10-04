@@ -25,7 +25,7 @@ ReactDOM.render(
           <Route path="/host">
             <BingoHost />
           </Route>
-          <Route path="/game">
+          <Route path="/game/:gameCode?">
             <BingoGame />
           </Route>
           <Route exact path="/">
