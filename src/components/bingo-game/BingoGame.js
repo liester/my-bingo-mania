@@ -11,7 +11,7 @@ import CurrentGames from '../current-games/CurrentGames';
 const socket = io(BASE_API_URL);
 
 const BingoGame = () => {
-  const [calledNumbers, setCalledNumbers] = useState([]);
+  const [calledNumbers, setCalledNumbers] = useState(['O 74', 'N 54']);
   const [currentGames, setCurrentGames] = useState([]);
   const [currentGame, setCurrentGame] = useState();
 
@@ -68,8 +68,8 @@ const BingoGame = () => {
         {!!calledNumbers.length && (
         <FlexContainer flexDirection="column">
           <FlexContainer justifyContent="space-around">
-            {calledNumbers.length > 1 && <div>Previous</div>}
-            <div>Current</div>
+            {calledNumbers.length > 1 && <div style={{ fontSize: '5vw' }}>Previous</div>}
+            <div style={{ fontSize: '5vw' }}>Current</div>
           </FlexContainer>
           <FlexContainer justifyContent="center" alignItems="center">
             {calledNumbers.map((number) => (
