@@ -11,7 +11,7 @@ import CurrentGames from '../current-games/CurrentGames';
 const socket = io(BASE_API_URL);
 
 const BingoGame = () => {
-  const [calledNumbers, setCalledNumbers] = useState(['O 74', 'N 54']);
+  const [calledNumbers, setCalledNumbers] = useState([]);
   const [currentGames, setCurrentGames] = useState([]);
   const [currentGame, setCurrentGame] = useState();
 
